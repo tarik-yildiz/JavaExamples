@@ -1,0 +1,79 @@
+<!-- invoice (complexType)
+    ├── invoiceNumber (string)
+    ├── invoiceDate (date)
+    ├── seller (complexType)
+    │   ├── name
+    │   ├── taxNumber
+    │   └── address
+    ├── buyer (complexType)
+    │   ├── name
+    │   ├── taxNumber
+    │   └── address
+    ├── items (sequence)
+    │   ├── item (complexType, multiple)
+    │   │   ├── name
+    │   │   ├── quantity
+    │   │   ├── unitPrice
+    │   │   ├── vatRate
+    │   │   └── amount
+    ├── summary (complexType)
+    │   ├── subtotal
+    │   ├── vatTotal
+    │   └── total
+    └── currency (attribute)-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="invoice">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="invoiceNumber" type="xs:string"/>
+                <xs:element name="invoiceDate" type="xs:date"/>
+                <xs:element name="seller" type="sellerType"/>
+                <xs:element name="buyer" type="buyerType"/>
+                <xs:element name="items" type="itemListType"/>
+                <xs:element name="summary" type="summaryType"/>
+            </xs:sequence>
+            <xs:attribute name="currency" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="sellerType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="taxNumber" type="xs:string"/>
+            <xs:element name="address" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="buyerType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="taxNumber" type="xs:string"/>
+            <xs:element name="address" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="itemListType">
+        <xs:sequence>
+            <xs:element name="item" maxOccurs="unbounded" minOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name" type="xs:string"/>
+                        <xs:element name="quantity" type="xs:int"/>
+                        <xs:element name="unitPrice" type="xs:decimal"/>
+                        <xs:element name="vatRate" type="xs:decimal"/>
+                        <xs:element name="amount" type="xs:decimal"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="summaryType">
+        <xs:sequence>
+            <xs:element name="subtotal" type="xs:int"/>
+            <xs:element name="vatTotal" type="xs:int"/>
+            <xs:element name="total" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+</xs:schema>
